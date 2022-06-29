@@ -1,0 +1,41 @@
+{% extends 'index.html' %}
+
+
+{% block head %}
+<title>Login & Registration</title>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container shadow p-3 mb-5 bg-white rounded mt-5">
+  <h3>Welcome to the Test</h3>
+  <p>We are going to build a cool application using MVC framework!<br> This application was build with the Village88
+    folks! </p>
+  <form class="form align-items-center" action="/register" method="Get">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Start </button>
+  </form>
+</div>
+<div class="container-info">
+  <div class="box">
+    <h5>Manage User</h5>
+    <p>Using this application, you'll learn how to add, remove, and edit users application.</p>
+  </div>
+  <div class="box">
+    <h5>Leave Message</h5>
+    <p>Users will be able to leave a message to another user using this application</p>
+  </div>
+  <div class="box">
+    <h5>Edit User Information</h5>
+    <p>Admins will be able to edit a another user information (email, first name, last name, etc).</p>
+  </div>
+
+</div>
+
+
+
+
+
+
+{% endblock %}

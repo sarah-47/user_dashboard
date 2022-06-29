@@ -1,0 +1,88 @@
+{% extends 'index2.html' %}
+
+
+{% block content %}
+<div class="d-flex justify-content-center justify-content-center container mb-3">
+    <div class="container align-items-center">
+        <div class="row ml-5 mt-5 ">
+            <div class="span6">
+                <h1>{{user.first_name}} {{user.last_name}}</h1>
+                <div class="row align-items-center mb-2">
+                    <p>Registed at: {{user.created_at|date:"M d, Y"}}</p>
+                </div>
+
+                <div class="row align-items-center mb-2">
+                    <p>User ID: #{{user.id}}</p>
+                </div>
+
+                <div class="row align-items-center mb-2">
+                    <p>Email address: {{user.email}}</p>
+                </div>
+
+                <div class="row align-items-center mb-2">
+                    {% if user.desc %}
+                    <p>Descripion: {{ user.desc }}</p>
+                    {% endif %}
+                </div>
+
+                <form class="form align-items-center mt-3 mb-5" action="/post_message/{{user.id}}" method="post">
+                    <h4>Leave a message for {{user.first_name}}</h4>
+                    <div class="row align-items-center mt-3 mb-2">
+                        <textarea cols="100" rows="5" name="message"></textarea>
+                    </div>
+                    <div class="text-end">
+                        {% csrf_token %}
+                        <div class="text-right">
+                            <button class="btn btn-success mt-3" type="submit">Post</button>
+                        </div>
+                </form>
+
+                <div class="row">
+                <div class="col">
+                    {% for message in user.usermessages.all %}
+                    <label class="form-label">{{message.user.first_name}} {{message.user.last_name}} Wrote 
+                        
+                    </label>
+                    <label class="text-right">
+                       - {{message.created_at|timesince}}
+                    </label>
+                    
+                </div>
+                  </div> 
+                    <div class="row align-items-center mb-2 border border-dark">
+                    <p class="m-3">{{message.message}}</p>
+                    </div>
+                    <form class="form align-items-center mt-5" action="/post_comment/{{message.id}}" method="post">
+                        <textarea name="comment" class="form-control m-3 " 
+                       placeholder="write a massage .." required></textarea>
+                        <div class="text-end">
+                            {% csrf_token %}
+                            <input type="hidden" name="user"  value="{{user.id}}"> 
+                           
+                            <div class="text-right">
+                                <button class="btn btn-success mt-3" type="submit">Post</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="row">
+                        <div class="col">
+                            {% for comment in message.comments.all %}
+                            <label class="form-label">{{comment.user.first_name}} {{comment.user.last_name}}
+                                
+                            </label>
+                            <label class="text-right">
+                               - {{comment.created_at|timesince}}
+                            </label>
+                           
+                        </div>                        
+                    </div> 
+                    <div class="row align-items-center mb-2 border border-dark">
+                            <p class="m-3">{{comment.comment}}</p>
+                    </div> 
+                 </div>
+            {% endfor %} 
+        {% endfor %}
+        </div>
+    </div>
+    {% endblock %}

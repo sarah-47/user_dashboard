@@ -1,0 +1,54 @@
+{% extends 'index2.html' %}
+{% block content %}
+<div class="d-flex justify-content-center justify-content-center container mb-3">
+    <div class="container align-items-center">
+        <div class="row ml-5 mt-1 ">
+            <div class="span6">
+                <h1 class="mt-4">All Users</h1>
+                <div class="row mb-3">
+                    <div class="container mt-5">
+                        <table class="table table-striped ml-5 mb-2">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Created At</th>
+                                    <th scope="col">User Level</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                <tr>
+                                    <td scope="row">
+                                        {{ user.id }}
+                                    </td>
+
+                                    <td scope="row">
+                                        <form class="form align-items-center" action="/users/show/{{ user.id }}"
+                                            method="POST">
+                                            {% csrf_token %}
+            <button class="btn btn-link" type="submit">{{ user.first_name }} {{ user.last_name }}</button>
+                                                
+                                        </form>
+                                    </td>
+ 
+                                    <td scope="row">{{ user.email }}</td>
+                                    <td>{{ user.created_at }}</td>
+                                   
+                                    {% if user.is_admin %}
+                                    <td>admin</td>
+                                    {% else %}
+                                    <td>normal</td>
+                                    {% endif %}
+                                    <td>          
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% endblock %}
